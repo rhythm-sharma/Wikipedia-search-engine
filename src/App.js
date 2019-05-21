@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+
+    }
+  }
+
+
+  render() {
+    return(
+      <div className='container'>
+        <div className="heading">
+          <h1>W</h1><h2>IKIPEDI</h2><h1>A</h1>
+        </div>
+        <div className="searchbar">
+          <input required="" type="text" className="searchTerm" placeholder="What are you looking for?" />
+          <button type="submit" className="searchButton"><i class="fa fa-search fa-lg"></i></button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
