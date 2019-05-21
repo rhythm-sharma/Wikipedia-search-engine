@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import Searchbar from './Component/Searchbar/Searchbar';
+import Cardlist from './Component/Card/Cardlist';
+import {SearchResult} from './SearchResult';
 import './App.css';
 
 class App extends Component {
@@ -6,21 +9,17 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-
+      SearchResult : SearchResult,
+      searchfield: ''
     }
   }
 
 
   render() {
     return(
-      <div className='container'>
-        <div className="heading">
-          <h1>W</h1><h2>IKIPEDI</h2><h1>A</h1>
-        </div>
-        <div className="searchbar">
-          <input required="" type="text" className="searchTerm" placeholder="What are you looking for?" />
-          <button type="submit" className="searchButton"><i class="fa fa-search fa-lg"></i></button>
-        </div>
+      <div>
+        <Searchbar />
+        <Cardlist SearchResult={this.state.SearchResult} />
       </div>
     );
   }
