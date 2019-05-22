@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Searchbar from './Component/Searchbar/Searchbar';
 import Cardlist from './Component/Card/Cardlist';
+// import Error from './Component/Error/Error';
 import './App.css';
 import 'tachyons';
 
@@ -41,7 +42,6 @@ class App extends Component {
           </div>
         );
       }else {
-        console.log(this.state.SearchResult)
         return(
           <div>
             <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />

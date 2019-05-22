@@ -7,10 +7,14 @@ const Searchbar = ({fetchResults ,searchChange}) => {
                 <div className="heading">
                     <h1>W</h1><h2>IKIPEDI</h2><h1>A</h1>
                 </div>
-                <div className="searchbar ba b--white" style={{borderRadius:27}}>
-                    <input onChange={searchChange} required="" type="text" className="searchTerm" placeholder="What are you looking for?" />
-                    <button onClick={fetchResults}  type="submit" className="searchButton"><i className="fa fa-search fa-lg"></i></button>
+                <div className="search-form ba b--white">
+                    <input onChange={searchChange} required type="text" className="search-field" placeholder="What are you looking for?" />
+                    <button onClick={fetchResults}  type="submit" className="button-search"><i className="fa fa-search fa-lg"></i></button>
                 </div>
+                {/* <form method="GET" className="search-form">
+                    <input onChange={searchChange} required type="search" className="search-field" placeholder="What are you looking for?" />
+                    <button onClick={fetchResults} type="submit" class="button-search"><i className="fa fa-search fa-lg"></i></button>
+                </form> */}
             </div>
         );
 }
