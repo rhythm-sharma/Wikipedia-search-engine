@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Searchbar from './Component/Searchbar/Searchbar';
 import Cardlist from './Component/Card/Cardlist';
 import './App.css';
+import 'tachyons';
 
 class App extends Component {
 
