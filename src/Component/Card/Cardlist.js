@@ -11,7 +11,8 @@ const Cardlist = ({SearchResult}) => {
                         key={key} 
                         id={item.id}
                         title={item.title}
-                        extract={item.extract} 
+                        snippet={item.snippet}
+                        pageid={item.pageid}
                     />)
                 })
             }

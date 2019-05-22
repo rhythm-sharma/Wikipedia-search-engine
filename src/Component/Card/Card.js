@@ -2,13 +2,16 @@ import React from 'react';
 import './Card.css';
 
 const Card = (props) => {
+    const directLink = `https://en.wikipedia.org/?curid=${props.pageid}`;
     return(
-            <article className="center mw5 mw6-ns br3 hidden ba b--black-10 mv4 grow bw5 shadow-10">
-                <h1 className="f4 bg-near-white br3 br--top black-60 mv0 pv2 ph3">{props.title}</h1>
-                <div className="pa3 bt b--black-10">
-                    <p className="f6 f5-ns lh-copy measure">{props.extract}</p>
-                </div>
-            </article>
+            <article className="center mw5 mw6-ns hidden ba mv4 shadow-5 grow">
+            <h1 className="f4 bg-near-black white mv0 pv2 ph3">
+                <a href={directLink} target="blank">{props.title}</a>
+            </h1>
+            <div className="pa3 bt">
+              <p dangerouslySetInnerHTML={{__html: props.snippet}} className="f6 f5-ns lh-copy measure mv0"></p>
+            </div>
+          </article>
     );
 }
 
