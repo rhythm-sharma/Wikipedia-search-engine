@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Searchbar from './Component/Searchbar/Searchbar';
 import Cardlist from './Component/Card/Cardlist';
 // import Error from './Component/Error/Error';
+import logo from './Loading.gif'
 import './App.css';
 import 'tachyons';
 
@@ -12,7 +13,10 @@ class App extends Component {
     this.state = {
       SearchResult : '',
       searchfield: '',
-      showcards: false
+      error: false,
+      showcards: false,
+      searchbuttonpress: false,
+      totalhits: null
     }
   }
 
@@ -21,6 +25,9 @@ class App extends Component {
   }
 
   fetchResults = () => {
+    this.setState({
+      searchbuttonpress: true
+    })
     console.log(this.state.searchfield);
     fetch(`https://en.wikipedia.org//w/api.php?origin=*&action=query&format=json&list=search&utf8=1&srsearch=${this.state.searchfield}`)
     .then(response => response.json())
@@ -28,28 +35,59 @@ class App extends Component {
       data =>
         this.setState({
           SearchResult : data.query.search,
+          totalhits: data.query.searchinfo.totalhits,
           showcards : true
         })
     )
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error)
+      this.setState({
+        error: true
+      })
+    });
   }
 
   render() {
-      if(!(this.state.showcards)) {
-        return(
-          <div>
-            <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-          </div>
-        );
+    console.log(this.state.error);
+    console.log(this.state.totalhits);
+      if(this.state.searchbuttonpress) {
+        if(this.state.showcards) {
+          return(
+            <div>
+              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+              <Cardlist SearchResult={this.state.SearchResult} />
+            </div>
+          );
+        }else if (this.state.error) {
+          return(
+            <div>
+              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+              <h1>error</h1>
+            </div>
+          );
+        }else if (this.state.totalhits === 0) {
+          return(
+            <div>
+              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+              <h1>error</h1>
+            </div>
+          );
+        }else {
+          return(
+            <div>
+              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+              <img className="center" src={logo} alt="Flowers in Chania" />             
+            </div>
+          );
+        }
       }else {
-        return(
-          <div>
-            <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-            <Cardlist SearchResult={this.state.SearchResult} />
-          </div>
-        );
-      }
-  }
+          return(
+            <div>
+              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+            </div>
+          );
+        }
+    }
 }
 
 export default App;

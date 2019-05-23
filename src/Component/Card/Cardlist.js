@@ -3,7 +3,7 @@ import Card from './Card';
 
 const Cardlist = ({SearchResult}) => {
     return(
-        <div>
+        <div style={{marginTop:150}}>
             {
                 SearchResult.map((item, key) => {
                     return(
