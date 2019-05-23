@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Searchbar from './Component/Searchbar/Searchbar';
 import Cardlist from './Component/Card/Cardlist';
-// import Error from './Component/Error/Error';
-import logo from './Loading.gif'
+import Error from './Component/Assets/Error';
+import Loading from './Component/Assets/Loading';
 import './App.css';
 import 'tachyons';
 
@@ -45,6 +45,7 @@ class App extends Component {
         error: true
       })
     });
+    // window.location.reload();
   }
 
   render() {
@@ -62,21 +63,14 @@ class App extends Component {
           return(
             <div>
               <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-              <h1>error</h1>
-            </div>
-          );
-        }else if (this.state.totalhits === 0) {
-          return(
-            <div>
-              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-              <h1>error</h1>
+              <Error/>
             </div>
           );
         }else {
           return(
             <div>
               <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-              <img className="center" src={logo} alt="Flowers in Chania" />             
+              <Loading/>    
             </div>
           );
         }
