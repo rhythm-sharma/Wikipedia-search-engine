@@ -99,3 +99,12 @@
   background-image: linear-gradient(to right,#ff8a00,#da1b60);
   padding: 0 22px 0 18px;
 }
+
+.randon-link{
+  display: flex;
+  justify-content: center;
+}
+
+.randon-link:hover{
+  color: #ff7300;
+}
