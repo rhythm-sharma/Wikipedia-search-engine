@@ -48,10 +48,20 @@ class App extends Component {
     // window.location.reload();
   }
 
+
+
   render() {
     console.log(this.state.error);
     console.log(this.state.totalhits);
-      if(this.state.searchbuttonpress) {
+    if (this.state.error || this.state.totalhits === 0) {
+      return(
+        <div>
+          <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+          <Error/>
+        </div>
+      );
+    }
+    if(this.state.searchbuttonpress) {
         if(this.state.showcards) {
           return(
             <div>
@@ -59,29 +69,20 @@ class App extends Component {
               <Cardlist SearchResult={this.state.SearchResult} />
             </div>
           );
-        }else if (this.state.error) {
-          return(
-            <div>
-              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-              <Error/>
-            </div>
-          );
-        }else {
+        }
           return(
             <div>
               <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
               <Loading/>    
             </div>
           );
-        }
-      }else {
+    }
           return(
             <div>
               <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
             </div>
           );
-        }
-    }
+  }
 }
 
 export default App;
