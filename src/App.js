@@ -14,9 +14,9 @@ class App extends Component {
       SearchResult : '',
       searchfield: '',
       error: false,
-      showcards: false,
       searchbuttonpress: false,
-      totalhits: null
+      totalhits: null,
+      isLoading: false
     }
   }
 
@@ -26,7 +26,8 @@ class App extends Component {
 
   fetchResults = () => {
     this.setState({
-      searchbuttonpress: true
+      searchbuttonpress: true,
+      isLoading: true
     })
     console.log(this.state.searchfield);
     fetch(`https://en.wikipedia.org//w/api.php?origin=*&action=query&format=json&list=search&utf8=1&srsearch=${this.state.searchfield}`)
@@ -36,7 +37,7 @@ class App extends Component {
         this.setState({
           SearchResult : data.query.search,
           totalhits: data.query.searchinfo.totalhits,
-          showcards : true
+          isLoading: false
         })
     )
     .catch(error => {
@@ -51,8 +52,9 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.error);
+    console.log( `error` + this.state.error);
     console.log(this.state.totalhits);
+    console.log(this.state.SearchResult);
     if (this.state.error || this.state.totalhits === 0) {
       return(
         <div>
@@ -62,26 +64,27 @@ class App extends Component {
       );
     }
     if(this.state.searchbuttonpress) {
-        if(this.state.showcards) {
-          return(
-            <div>
-              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-              <Cardlist SearchResult={this.state.SearchResult} />
-            </div>
-          );
-        }
-          return(
-            <div>
-              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-              <Loading/>    
-            </div>
-          );
+      if(this.state.isLoading) {
+        return(
+          <div>
+            <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+            <Loading/>
+          </div>
+        );
+      }else {
+        return(
+          <div>
+            <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+            <Cardlist SearchResult={this.state.SearchResult} />
+          </div>
+        );
+      }
     }
-          return(
-            <div>
-              <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-            </div>
-          );
+    return(
+      <div>
+        <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+      </div>
+    );
   }
 }
 
