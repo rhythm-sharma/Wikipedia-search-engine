@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Searchbar from './Component/Searchbar/Searchbar';
 import Cardlist from './Component/Card/Cardlist';
-import Error from './Component/Assets/Error';
+import {Error, Errorspace} from './Component/Assets/Error';
 import Loading from './Component/Assets/Loading';
 import './App.css';
 import 'tachyons';
@@ -25,28 +25,27 @@ class App extends Component {
   }
 
   fetchResults = () => {
-    this.setState({
-      searchbuttonpress: true,
-      isLoading: true
-    })
-    console.log(this.state.searchfield);
-    fetch(`https://en.wikipedia.org//w/api.php?origin=*&action=query&format=json&list=search&utf8=1&srsearch=${this.state.searchfield}`)
-    .then(response => response.json())
-    .then(
-      data =>
-        this.setState({
-          SearchResult : data.query.search,
-          totalhits: data.query.searchinfo.totalhits,
-          isLoading: false
-        })
-    )
-    .catch(error => {
-      console.log(error)
       this.setState({
-        error: true
+        searchbuttonpress: true,
+        isLoading: true
       })
-    });
-    // window.location.reload();
+      console.log(this.state.searchfield);
+      fetch(`https://en.wikipedia.org//w/api.php?origin=*&action=query&format=json&list=search&utf8=1&srsearch=${this.state.searchfield}`)
+      .then(response => response.json())
+      .then(
+        data =>
+          this.setState({
+            SearchResult : data.query.search,
+            totalhits: data.query.searchinfo.totalhits,
+            isLoading: false
+          })
+      )
+      .catch(error => {
+        console.log(error)
+        this.setState({
+          error: true
+        })
+      });
   }
 
 
@@ -55,11 +54,19 @@ class App extends Component {
     console.log( `error` + this.state.error);
     console.log(this.state.totalhits);
     console.log(this.state.SearchResult);
-    if (this.state.error || this.state.totalhits === 0) {
+    if (this.state.totalhits === 0) {
       return(
         <div>
           <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
           <Error/>
+        </div>
+      );
+    }
+    if (this.state.error) {
+      return(
+        <div>
+          <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
+          <Errorspace />
         </div>
       );
     }

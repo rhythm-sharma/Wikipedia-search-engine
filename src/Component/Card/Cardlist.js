@@ -3,7 +3,8 @@ import Card from './Card';
 
 const Cardlist = ({SearchResult}) => {
     return(
-        <div style={{marginTop:150}}>
+        <div>
+            <h2 className="tc f1-l fw1 white">Search Results</h2>
             {
                 SearchResult.map((item, key) => {
                     return(
