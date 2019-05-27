@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import Searchbar from './Component/Searchbar/Searchbar';
 import Cardlist from './Component/Card/Cardlist';
-import {Error, Errorspace} from './Component/Assets/Error';
+import {Error} from './Component/Assets/Error';
 import Loading from './Component/Assets/Loading';
-import './App.css';
 import 'tachyons';
 
 class App extends Component {
@@ -24,12 +23,14 @@ class App extends Component {
     this.setState({searchfield: event.target.value})
   }
 
-  fetchResults = () => {
+  fetchResults = (e) => {
+      e.preventDefault();
       this.setState({
         searchbuttonpress: true,
         isLoading: true
       })
       console.log(this.state.searchfield);
+      // add origin=* to your fetch link to solve CROS error
       fetch(`https://en.wikipedia.org//w/api.php?origin=*&action=query&format=json&list=search&utf8=1&srsearch=${this.state.searchfield}`)
       .then(response => response.json())
       .then(
@@ -59,14 +60,6 @@ class App extends Component {
         <div>
           <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
           <Error/>
-        </div>
-      );
-    }
-    if (this.state.error) {
-      return(
-        <div>
-          <Searchbar fetchResults={this.fetchResults} searchChange={this.onsearchChange} />
-          <Errorspace />
         </div>
       );
     }
